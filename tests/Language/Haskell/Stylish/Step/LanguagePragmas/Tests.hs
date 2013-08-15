@@ -24,6 +24,9 @@ tests = testGroup "Language.Haskell.Stylish.Step.LanguagePragmas.Tests"
     , testCase "case 04" case04
     , testCase "case 05" case05
     , testCase "case 06" case06
+    , testCase "case 07" case07
+    , testCase "case 08" case08
+    , testCase "case 09" case09
     ]
 
 
@@ -127,4 +130,62 @@ case06 = expected @=? testStep (step 80 CompactLine False) input
         [ "{-# LANGUAGE DeriveDataTypeable, StandaloneDeriving, " ++
           "TemplateHaskell #-}"
         , "{-# LANGUAGE TypeOperators, ViewPatterns                             #-}"
+        ]
+
+
+--------------------------------------------------------------------------------
+case07 :: Assertion
+case07 = expected @=? testStep (step 80 Utrecht False) input
+  where
+    input = unlines
+        [ "{-# LANGUAGE TemplateHaskell, OverloadedStrings #-}"
+        , ""
+        , "main = undefined"
+        ]
+
+    expected = unlines
+        [ "{-# LANGUAGE"
+        , "    OverloadedStrings"
+        , "  , TemplateHaskell"
+        , "  #-}"
+        , ""
+        , "main = undefined"
+        ]
+
+
+--------------------------------------------------------------------------------
+case08 :: Assertion
+case08 = expected @=? testStep (step 80 Utrecht False) input
+  where
+    input = unlines
+        [ "{-# LANGUAGE OverloadedStrings, TemplateHaskell, RecordWildCards #-}"
+        , ""
+        , "main = undefined"
+        ]
+
+    expected = unlines
+        [ "{-# LANGUAGE"
+        , "    OverloadedStrings"
+        , "  , RecordWildCards"
+        , "  , TemplateHaskell"
+        , "  #-}"
+        , ""
+        , "main = undefined"
+        ]
+
+
+--------------------------------------------------------------------------------
+case09 :: Assertion
+case09 = expected @=? testStep (step 80 Utrecht False) input
+  where
+    input = unlines
+        [ "{-# LANGUAGE OverloadedStrings #-}"
+        , ""
+        , "main = undefined"
+        ]
+
+    expected = unlines
+        [ "{-# LANGUAGE OverloadedStrings #-}"
+        , ""
+        , "main = undefined"
         ]
