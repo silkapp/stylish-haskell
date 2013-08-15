@@ -111,6 +111,8 @@ steps:
       # - compact_line: Similar to compact, but wrap each line with
       #   `{-#LANGUAGE #-}'.
       #
+      # - utrecht: One LANGUAGE declaration with commas at the start of each line.
+      #
       # Default: vertical.
       style: vertical
 

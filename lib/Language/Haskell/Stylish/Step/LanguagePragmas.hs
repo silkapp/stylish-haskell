@@ -5,6 +5,7 @@ module Language.Haskell.Stylish.Step.LanguagePragmas
 
       -- * Utilities
     , addLanguagePragma
+    , utrechtPragmas
     ) where
 
 
@@ -25,6 +26,7 @@ data Style
     = Vertical
     | Compact
     | CompactLine
+    | Utrecht
     deriving (Eq, Show)
 
 
@@ -87,10 +89,23 @@ truncateComma xs
 
 
 --------------------------------------------------------------------------------
+utrechtPragmas :: [String] -> Lines
+utrechtPragmas [] = []
+utrechtPragmas [pragma] = ["{-# LANGUAGE " ++ pragma ++ " #-}"]
+utrechtPragmas (pragma:pragmas') = concat
+  [ ["{-# LANGUAGE"]
+  , [indent 4 pragma]
+  , map (indent 2 . (", " ++)) pragmas'
+  , [indent 2 "#-}"]
+  ]
+
+
+--------------------------------------------------------------------------------
 prettyPragmas :: Int -> Int -> Bool -> Style -> [String] -> Lines
 prettyPragmas _    longest align Vertical    = verticalPragmas longest align
 prettyPragmas cols _       _     Compact     = compactPragmas cols
 prettyPragmas cols _       align CompactLine = compactLinePragmas cols align
+prettyPragmas _    _       _     Utrecht     = utrechtPragmas
 
 
 --------------------------------------------------------------------------------
