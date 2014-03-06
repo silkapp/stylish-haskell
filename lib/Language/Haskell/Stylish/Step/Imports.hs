@@ -67,13 +67,13 @@ importName i = let (H.ModuleName _ n) = H.importModule i in n
 
 --------------------------------------------------------------------------------
 longestImport :: [H.ImportDecl l] -> Int
-longestImport = maximum . map (length . importName)
+longestImport = maximum . (0:) . map (length . importName) . filter H.importQualified
 
 
 --------------------------------------------------------------------------------
 -- | Compare imports for ordering
 compareImports :: H.ImportDecl l -> H.ImportDecl l -> Ordering
-compareImports = comparing (map toLower . importName &&& H.importQualified)
+compareImports = comparing (H.importQualified &&& importName)
 
 
 --------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ prettyImportGroup columns align fileAlign longest imps =
     padQual = case align' of
         Global -> True
         File   -> fileAlign
-        Group  -> any H.importQualified imps
+        Group  -> False
         None   -> False
 
 
