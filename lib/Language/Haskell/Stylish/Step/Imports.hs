@@ -186,7 +186,7 @@ prettyImport columns Align{..} padQualified padName longest imp =
 
     paddedNoSpecBase = base $ padImportNoSpec $ importName imp
 
-    padImport = if hasExtras && padName
+    padImport = if hasExtras && padName && H.importQualified imp
         then padRight longest
         else id
 
