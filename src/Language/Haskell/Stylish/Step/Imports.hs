@@ -6,12 +6,14 @@ module Language.Haskell.Stylish.Step.Imports
 
 
 --------------------------------------------------------------------------------
+import           Control.Applicative             hiding (many, (<|>))
 import           Control.Arrow                   ((&&&))
-import           Data.Char                       (isAlpha, toLower)
+import           Data.Char
 import           Data.List                       (intercalate, sortBy)
 import           Data.Maybe                      (isJust, maybeToList)
 import           Data.Ord                        (comparing)
 import qualified Language.Haskell.Exts.Annotated as H
+import           Text.Parsec
 
 
 --------------------------------------------------------------------------------
@@ -49,8 +51,12 @@ longestImport = maximum . (0:) . map (length . importName) . filter H.importQual
 --------------------------------------------------------------------------------
 -- | Compare imports for ordering
 compareImports :: H.ImportDecl l -> H.ImportDecl l -> Ordering
-compareImports = comparing (H.importQualified &&& importName)
-
+compareImports = comparing (H.importQualified &&& numberWang . importName)
+  where
+    numberWang :: String -> [Either Int String]
+    numberWang s = either (const [Right s]) id $ parse p "care" s
+    p = many $  (Left . read <$> many1 (satisfy isDigit))
+            <|> (Right       <$> many1 (satisfy (not . isDigit)))
 
 --------------------------------------------------------------------------------
 -- | The implementation is a bit hacky to get proper sorting for input specs:
