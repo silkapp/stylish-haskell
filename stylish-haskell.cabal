@@ -55,6 +55,7 @@ Library
     haskell-src-exts >= 1.17 && < 1.18,
     mtl              >= 2.0  && < 2.3,
     syb              >= 0.3  && < 0.7,
+    parsec,
     yaml             >= 0.7  && < 0.9
 
 Executable stylish-haskell
@@ -76,6 +77,7 @@ Executable stylish-haskell
     haskell-src-exts >= 1.17 && < 1.18,
     mtl              >= 2.0  && < 2.3,
     syb              >= 0.3  && < 0.7,
+    parsec,
     yaml             >= 0.7  && < 0.9
 
 Test-suite stylish-haskell-tests
@@ -109,6 +111,7 @@ Test-suite stylish-haskell-tests
     haskell-src-exts >= 1.17 && < 1.18,
     mtl              >= 2.0  && < 2.3,
     syb              >= 0.3  && < 0.7,
+    parsec           == 3.*,
     yaml             >= 0.7  && < 0.9
 
 Source-repository head
