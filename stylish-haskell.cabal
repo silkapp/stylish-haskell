@@ -76,7 +76,7 @@ Executable stylish-haskell
     filepath         >= 1.1  && < 1.4,
     haskell-src-exts >= 1.16 && < 1.17,
     mtl              >= 2.0  && < 2.3,
-    parsec,
+    parsec           == 3.*,
     syb              >= 0.3  && < 0.5,
     yaml             >= 0.7  && < 0.9
 
@@ -110,6 +110,7 @@ Test-suite stylish-haskell-tests
     filepath         >= 1.1  && < 1.4,
     haskell-src-exts >= 1.16 && < 1.17,
     mtl              >= 2.0  && < 2.3,
+    parsec           == 3.*,
     syb              >= 0.3  && < 0.5,
     yaml             >= 0.7  && < 0.9
 
